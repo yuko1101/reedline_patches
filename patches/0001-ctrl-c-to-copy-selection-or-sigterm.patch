@@ -1,0 +1,57 @@
+From 277fd9d40695236794f53ca078c1b57e300b426a Mon Sep 17 00:00:00 2001
+From: yuko1101 <68993883+yuko1101@users.noreply.github.com>
+Date: Wed, 22 Apr 2026 00:05:32 +0900
+Subject: [PATCH] ctrl+c to copy selection or sigterm
+X-Git-Patcher-Author: yuko1101 <68993883+yuko1101@users.noreply.github.com> 1776783932 +0900
+X-Git-Patcher-Committer: yuko1101 <68993883+yuko1101@users.noreply.github.com> 1776783932 +0900
+X-Git-Patcher-Commit-Message: Y3RybCtjIHRvIGNvcHkgc2VsZWN0aW9uIG9yIHNpZ3Rlcm0K
+X-Git-Patcher-Parent-Hash: 8b5ba014b07ba2f7dd0d51b0f88bf26c67d55790
+X-Git-Patcher-Commit-Hash: 277fd9d40695236794f53ca078c1b57e300b426a
+
+
+---
+ src/engine.rs | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
+
+diff --git a/src/engine.rs b/src/engine.rs
+index ac7ccf8..1866fde 100644
+--- a/src/engine.rs
++++ b/src/engine.rs
+@@ -995,6 +995,18 @@ impl Reedline {
+                 }
+             }
+             ReedlineEvent::CtrlC => {
++                if self
++                    .editor
++                    .get_selection()
++                    .is_some_and(|(start, end)| start < end)
++                {
++                    #[cfg(feature = "system_clipboard")]
++                    self.editor
++                        .run_edit_command(&EditCommand::CopySelectionSystem);
++                    #[cfg(not(feature = "system_clipboard"))]
++                    self.editor.run_edit_command(&EditCommand::CopySelection);
++                    return Ok(EventStatus::Handled);
++                }
+                 self.input_mode = InputMode::Regular;
+                 Ok(EventStatus::Exits(Signal::CtrlC))
+             }
+@@ -1241,6 +1253,18 @@ impl Reedline {
+                 }
+             }
+             ReedlineEvent::CtrlC => {
++                if self
++                    .editor
++                    .get_selection()
++                    .is_some_and(|(start, end)| start < end)
++                {
++                    #[cfg(feature = "system_clipboard")]
++                    self.editor
++                        .run_edit_command(&EditCommand::CopySelectionSystem);
++                    #[cfg(not(feature = "system_clipboard"))]
++                    self.editor.run_edit_command(&EditCommand::CopySelection);
++                    return Ok(EventStatus::Handled);
++                }
+                 self.deactivate_menus();
+                 self.editor.reset_undo_stack();
+                 if self.editor.is_empty() {

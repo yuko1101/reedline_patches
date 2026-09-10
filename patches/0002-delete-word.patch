@@ -1,12 +1,12 @@
-From 29204656e0da6e11857f88177348a43a3a481651 Mon Sep 17 00:00:00 2001
+From 33b87b3f9bc12d04749edc21d72eba1e56155a0c Mon Sep 17 00:00:00 2001
 From: yuko1101 <68993883+yuko1101@users.noreply.github.com>
 Date: Wed, 22 Apr 2026 00:08:03 +0900
 Subject: [PATCH] delete word
 X-Git-Patcher-Author: yuko1101 <68993883+yuko1101@users.noreply.github.com> 1776784083 +0900
 X-Git-Patcher-Committer: yuko1101 <68993883+yuko1101@users.noreply.github.com> 1776784083 +0900
 X-Git-Patcher-Commit-Message: ZGVsZXRlIHdvcmQK
-X-Git-Patcher-Parent-Hash: 277fd9d40695236794f53ca078c1b57e300b426a
-X-Git-Patcher-Commit-Hash: 29204656e0da6e11857f88177348a43a3a481651
+X-Git-Patcher-Parent-Hash: 28c72d08ef5dcb2b00e5bb62c53f2f00ff42a729
+X-Git-Patcher-Commit-Hash: 33b87b3f9bc12d04749edc21d72eba1e56155a0c
 
 
 ---
@@ -14,13 +14,13 @@ X-Git-Patcher-Commit-Hash: 29204656e0da6e11857f88177348a43a3a481651
  1 file changed, 18 insertions(+), 2 deletions(-)
 
 diff --git a/src/core_editor/editor.rs b/src/core_editor/editor.rs
-index 0d7673b..3600d6f 100644
+index ee670d7..484ab72 100644
 --- a/src/core_editor/editor.rs
 +++ b/src/core_editor/editor.rs
-@@ -88,8 +88,8 @@ impl Editor {
-             EditCommand::Backspace => self.backspace(),
+@@ -276,8 +276,8 @@ impl Editor {
              EditCommand::Delete => self.delete(),
              EditCommand::CutChar => self.cut_char(),
+             EditCommand::CutCharLeft => self.cut_char_left(),
 -            EditCommand::BackspaceWord => self.line_buffer.delete_word_left(),
 -            EditCommand::DeleteWord => self.line_buffer.delete_word_right(),
 +            EditCommand::BackspaceWord => self.backspace_word(),
@@ -28,7 +28,7 @@ index 0d7673b..3600d6f 100644
              EditCommand::Clear => self.line_buffer.clear(),
              EditCommand::ClearToLineEnd => self.line_buffer.clear_to_line_end(),
              EditCommand::CutCurrentLine => self.cut_current_line(),
-@@ -735,6 +735,22 @@ impl Editor {
+@@ -1507,6 +1507,22 @@ impl Editor {
          }
      }
  
@@ -49,5 +49,5 @@ index 0d7673b..3600d6f 100644
 +    }
 +
      fn move_word_left(&mut self, select: bool) {
-         self.move_to_position(self.line_buffer.word_left_index(), select);
-     }
+         self.apply_move(
+             word_target(WordKind::Unicode, WordEdge::Start, Direction::Backward),

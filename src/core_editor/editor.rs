@@ -1508,7 +1508,7 @@ impl Editor {
     }
 
     fn backspace_word(&mut self) {
-        if self.selection_anchor.is_some() {
+        if self.line_buffer.selection_anchor().is_some() {
             self.delete_selection();
         } else {
             self.line_buffer.delete_word_left();
@@ -1516,7 +1516,7 @@ impl Editor {
     }
 
     fn delete_word(&mut self) {
-        if self.selection_anchor.is_some() {
+        if self.line_buffer.selection_anchor().is_some() {
             self.delete_selection();
         } else {
             self.line_buffer.delete_word_right();

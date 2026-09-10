@@ -1,12 +1,12 @@
-From 33b87b3f9bc12d04749edc21d72eba1e56155a0c Mon Sep 17 00:00:00 2001
+From 8ccf3c923b9ddcc3bbc0747402691b9d40de1f0e Mon Sep 17 00:00:00 2001
 From: yuko1101 <68993883+yuko1101@users.noreply.github.com>
 Date: Wed, 22 Apr 2026 00:08:03 +0900
 Subject: [PATCH] delete word
 X-Git-Patcher-Author: yuko1101 <68993883+yuko1101@users.noreply.github.com> 1776784083 +0900
-X-Git-Patcher-Committer: yuko1101 <68993883+yuko1101@users.noreply.github.com> 1776784083 +0900
+X-Git-Patcher-Committer: yuko1101 <68993883+yuko1101@users.noreply.github.com> 1789069687 +0900
 X-Git-Patcher-Commit-Message: ZGVsZXRlIHdvcmQK
 X-Git-Patcher-Parent-Hash: 28c72d08ef5dcb2b00e5bb62c53f2f00ff42a729
-X-Git-Patcher-Commit-Hash: 33b87b3f9bc12d04749edc21d72eba1e56155a0c
+X-Git-Patcher-Commit-Hash: 8ccf3c923b9ddcc3bbc0747402691b9d40de1f0e
 
 
 ---
@@ -14,7 +14,7 @@ X-Git-Patcher-Commit-Hash: 33b87b3f9bc12d04749edc21d72eba1e56155a0c
  1 file changed, 18 insertions(+), 2 deletions(-)
 
 diff --git a/src/core_editor/editor.rs b/src/core_editor/editor.rs
-index ee670d7..484ab72 100644
+index ee670d7..773abea 100644
 --- a/src/core_editor/editor.rs
 +++ b/src/core_editor/editor.rs
 @@ -276,8 +276,8 @@ impl Editor {
@@ -33,7 +33,7 @@ index ee670d7..484ab72 100644
      }
  
 +    fn backspace_word(&mut self) {
-+        if self.selection_anchor.is_some() {
++        if self.line_buffer.selection_anchor().is_some() {
 +            self.delete_selection();
 +        } else {
 +            self.line_buffer.delete_word_left();
@@ -41,7 +41,7 @@ index ee670d7..484ab72 100644
 +    }
 +
 +    fn delete_word(&mut self) {
-+        if self.selection_anchor.is_some() {
++        if self.line_buffer.selection_anchor().is_some() {
 +            self.delete_selection();
 +        } else {
 +            self.line_buffer.delete_word_right();

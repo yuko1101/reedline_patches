@@ -2,13 +2,14 @@ mod base;
 mod cursor;
 mod file_backed;
 mod item;
-#[cfg(any(feature = "sqlite", feature = "sqlite-dynlib"))]
+#[cfg(feature = "_sqlite")]
 mod sqlite_backed;
-#[cfg(any(feature = "sqlite", feature = "sqlite-dynlib"))]
+#[cfg(feature = "_sqlite")]
 pub use sqlite_backed::SqliteBackedHistory;
 
 pub use base::{
-    CommandLineSearch, History, HistoryNavigationQuery, SearchDirection, SearchFilter, SearchQuery,
+    CommandLineSearch, History, HistoryNavigationQuery, JsonFilterValue, SearchDirection,
+    SearchFilter, SearchQuery,
 };
 pub use cursor::HistoryCursor;
 pub use item::{

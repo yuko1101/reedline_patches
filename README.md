@@ -199,6 +199,24 @@ let mut line_editor = Reedline::create().with_edit_mode(Box::new(Vi::new(
 )));
 ```
 
+### Use `Helix` edit mode
+
+```rust
+// Selection-first editing: motions carry the selection, verbs act on it.
+
+use reedline::{default_helix_normal_keybindings, Helix, Reedline};
+
+let mut normal_keybindings = default_helix_normal_keybindings();
+// normal_keybindings.add_binding(..);
+
+let mut line_editor = Reedline::create()
+    .with_edit_mode(Box::new(Helix::default().with_normal_keybindings(normal_keybindings)));
+```
+
+Run `cargo run --example helix` for the mode on its own, or
+`cargo run --example demo -- --helix` to exercise it against the demo's
+history and menus.
+
 ## Crate features
 
 - `clipboard`: Enable support to use the `SystemClipboard`. Enabling this feature will return a `SystemClipboard` instead of a local clipboard when calling `get_default_clipboard()`.
